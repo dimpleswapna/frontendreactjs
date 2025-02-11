@@ -1,5 +1,5 @@
 pool:
-  name: 'Ajentpipeline'
+  name: 'PoolAjent'
   
 variables:
   version: 'frontend_$(Build.BuildId)'
