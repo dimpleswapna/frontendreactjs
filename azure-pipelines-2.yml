@@ -1,6 +1,6 @@
 
 pool:
-  name: 'SwapnaAjent'
+  name: 'Ajentpool'
   
 variables:
   version: 'frontend_$(Build.BuildId)'
