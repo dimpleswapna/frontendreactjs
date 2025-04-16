@@ -1,34 +1,34 @@
-# Build Stage
-FROM node:14 as build
+# ---------- Build Stage ----------
+FROM node:14 AS build
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-
-# Copy package.json and package-lock.json to the container
+# Copy dependency files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the container
+# Copy the full application code
 COPY . .
 
 # Build the React app
 RUN npm run build
 
-# Production Stage
+
+# ---------- Production Stage ----------
 FROM nginx:alpine
 
-#ENV REACT_APP_BACKEND_URL "http://43.204.142.222:30008/api/tasks"
-# Copy custom nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy the build folder from previous stage to nginx directory
+# Copy the build output from previous stage to nginx's default html directory
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose port 80 to the outside world
+# Optionally copy a custom nginx config file if you use one
+# Make sure nginx.conf exists in the same directory as your Dockerfile
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80 to the outside
 EXPOSE 80
 
-# Start nginx server
+# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
