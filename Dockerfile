@@ -18,7 +18,7 @@ RUN npm run build
 
 
 # ---------- Production Stage ----------
-FROM nginx:alpine
+FROM nginx:1.25.3-alpine
 
 # Copy the build output from previous stage to nginx's default html directory
 COPY --from=build /app/build /usr/share/nginx/html
